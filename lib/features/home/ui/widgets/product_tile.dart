@@ -25,9 +25,11 @@ class ProductTile extends StatelessWidget {
             height: 200,
             width: double.infinity,
             child: CachedNetworkImage(
+              fadeInDuration: const Duration(milliseconds: 500),
+              placeholderFadeInDuration: const Duration(milliseconds: 300),
               fit: BoxFit.cover,
-              placeholder: (context, url) => const Center(
-                child: CircularProgressIndicator(),
+              placeholder: (context, url) => Container(
+                color: Colors.grey[300],
               ),
               errorWidget: (context, url, error) => const Icon(Icons.error),
               imageUrl: productDataModel.imageUrl,
