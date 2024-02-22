@@ -43,6 +43,28 @@ class _HomeState extends State<Home> {
               builder: (context) => WishlistPage(),
             ),
           );
+        } else if (state is HomeProductAddedToCartActionState) {
+          ScaffoldMessenger.of(context).clearSnackBars();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text(
+                'Item added to Cart.',
+                style: TextStyle(color: Colors.white),
+              ),
+              backgroundColor: Theme.of(context).primaryColor.withOpacity(0.5),
+            ),
+          );
+        } else if (state is HomeProductAddedToWishlistActionState) {
+          ScaffoldMessenger.of(context).clearSnackBars();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text(
+                'Item added to Wishlist.',
+                style: TextStyle(color: Colors.white),
+              ),
+              backgroundColor: Theme.of(context).primaryColor.withOpacity(0.5),
+            ),
+          );
         }
       },
       builder: (context, state) {
@@ -89,6 +111,7 @@ class _HomeState extends State<Home> {
                 itemCount: successState.products.length,
                 itemBuilder: (BuildContext context, int index) {
                   return ProductTile(
+                      homeBloc: homeBloc,
                       productDataModel: successState.products[index]);
                 },
               ),

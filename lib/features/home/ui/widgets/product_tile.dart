@@ -2,12 +2,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:meals_shop/features/home/models/product_data_model.dart';
 
+import '../../bloc/home_bloc.dart';
+
 class ProductTile extends StatelessWidget {
   const ProductTile({
     super.key,
     required this.productDataModel,
+    required this.homeBloc,
   });
   final ProductDataModel productDataModel;
+  final HomeBloc homeBloc;
 
   @override
   Widget build(BuildContext context) {
@@ -66,17 +70,21 @@ class ProductTile extends StatelessWidget {
                 children: [
                   IconButton(
                     onPressed: () {
-                      // homeBloc.add(
-                      //  HomeWishlistButtonNavigateEvent(),
-                      //  );
+                      homeBloc.add(
+                        HomeProductWishlistButtonClickedEvent(
+                          clickedProduct: productDataModel,
+                        ),
+                      );
                     },
                     icon: const Icon(Icons.favorite_border),
                   ),
                   IconButton(
                     onPressed: () {
-                      //    homeBloc.add(
-                      //    HomeCartButtonNavigateEvent(),
-                      // );
+                      homeBloc.add(
+                        HomeProductCartButtonClickedEvent(
+                          clickedProduct: productDataModel,
+                        ),
+                      );
                     },
                     icon: const Icon(Icons.shopping_cart_outlined),
                   ),
