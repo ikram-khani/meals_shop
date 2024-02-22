@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meals_shop/data/meals_data.dart';
+import 'package:meals_shop/features/cart/ui/cart.dart';
 import 'package:meals_shop/features/home/bloc/home_bloc.dart';
+import 'package:meals_shop/features/wishlist/ui/wishlist.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -11,71 +13,113 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final HomeBloc homeBloc = HomeBloc();
+
+  @override
+  void initState() {
+    homeBloc.add(HomeInitialEvent());
+    super.initState();
+  }
+
   final meals = MealsData.mealProducts;
   @override
   Widget build(BuildContext context) {
-    final HomeBloc homeBloc = HomeBloc();
     return BlocConsumer<HomeBloc, HomeState>(
       bloc: homeBloc,
-      // listenWhen: (previous, current) {},
-      // buildWhen: (previous, current) {},
-      listener: (context, state) {},
-      builder: (context, state) {
-        return Scaffold(
-          appBar: AppBar(
-            actions: [
-              IconButton(
-                onPressed: () {
-                  homeBloc.add(
-                    HomeWishlistButtonNavigateEvent(),
-                  );
-                },
-                icon: const Icon(Icons.favorite_border),
-              ),
-              IconButton(
-                onPressed: () {
-                  homeBloc.add(
-                    HomeCartButtonNavigateEvent(),
-                  );
-                },
-                icon: const Icon(Icons.shopping_cart_outlined),
-              ),
-            ],
-            title: const Text(
-              'Meals Shop',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w500,
-              ),
+      listenWhen: (previous, current) => current is HomeActionState,
+      buildWhen: (previous, current) => current is! HomeActionState,
+      listener: (context, state) {
+        if (state is HomeNavigationToCartPageActionState) {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => CartPage(),
             ),
-            backgroundColor: Theme.of(context).primaryColor.withOpacity(0.5),
-          ),
-          body: ListView.builder(
-            itemCount: meals.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Container(
-                padding: EdgeInsets.all(10),
-                margin: EdgeInsets.all(10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      meals[index]['name'],
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Image(
-                      image: NetworkImage(meals[index]['imageUrl']),
-                      fit: BoxFit.cover,
-                    ),
-                  ],
+          );
+        }
+        if (state is HomeNavigationToWishListPageActionState) {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => WishlistPage(),
+            ),
+          );
+        }
+      },
+      builder: (context, state) {
+        switch (state.runtimeType) {
+          case HomeLoadingState:
+            return const Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          case HomeLoadedSuccessState:
+            return Scaffold(
+              appBar: AppBar(
+                actions: [
+                  IconButton(
+                    onPressed: () {
+                      homeBloc.add(
+                        HomeWishlistButtonNavigateEvent(),
+                      );
+                    },
+                    icon: const Icon(Icons.favorite_border),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      homeBloc.add(
+                        HomeCartButtonNavigateEvent(),
+                      );
+                    },
+                    icon: const Icon(Icons.shopping_cart_outlined),
+                  ),
+                ],
+                title: const Text(
+                  'Meals Shop',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-              );
-            },
-          ),
-        );
+                backgroundColor:
+                    Theme.of(context).primaryColor.withOpacity(0.5),
+              ),
+              body: ListView.builder(
+                itemCount: meals.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
+                    padding: EdgeInsets.all(10),
+                    margin: EdgeInsets.all(10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          meals[index]['name'],
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Image(
+                          image: NetworkImage(meals[index]['imageUrl']),
+                          fit: BoxFit.cover,
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            );
+
+          case HomeErrorState:
+            return const Scaffold(
+              body: Center(
+                child: Text('Error'),
+              ),
+            );
+
+          default:
+            return const SizedBox();
+        }
       },
     );
   }
