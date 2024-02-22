@@ -42,7 +42,7 @@ class MealsData {
           "Romaine lettuce, croutons, and parmesan cheese tossed in Caesar dressing.",
       "price": 8.49,
       "imageUrl":
-          "https://www.recipetineats.com/wp-content/uploads/2016/05/Caesar-Salad_7-SQ.jpg",
+          "https://itsavegworldafterall.com/wp-content/uploads/2023/04/Avocado-Caesar-Salad-FI.jpg",
     },
     {
       "id": 6,
@@ -68,7 +68,7 @@ class MealsData {
       "description": "Tender pork ribs glazed with barbecue sauce.",
       "price": 18.99,
       "imageUrl":
-          "https://www.coles.com.au/content/dam/coles/cusp/recipes-inspiration/pvx/May23-PVX-slow-cooker-BBQ-ribs-976x549.jpg",
+          "https://nomnompaleo.com/wp-content/uploads/2022/07/1200-Ribs-aaDSC_9515a.jpg",
     },
     {
       "id": 9,
@@ -77,7 +77,7 @@ class MealsData {
           "Creamy Italian rice dish cooked with mushrooms and parmesan cheese.",
       "price": 13.99,
       "imageUrl":
-          "https://cdn.loveandlemons.com/wp-content/uploads/2023/01/mushroom-risotto.jpg",
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHj9oVX84cf2XkiySDHuLEcTSeFikBu2x-uA&usqp=CAU",
     },
     {
       "id": 10,

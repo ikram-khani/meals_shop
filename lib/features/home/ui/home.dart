@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meals_shop/data/meals_data.dart';
 import 'package:meals_shop/features/cart/ui/cart.dart';
 import 'package:meals_shop/features/home/bloc/home_bloc.dart';
+import 'package:meals_shop/features/home/ui/widgets/product_tile.dart';
 import 'package:meals_shop/features/wishlist/ui/wishlist.dart';
 
 class Home extends StatefulWidget {
@@ -53,6 +54,7 @@ class _HomeState extends State<Home> {
               ),
             );
           case HomeLoadedSuccessState:
+            final successState = state as HomeLoadedSuccessState;
             return Scaffold(
               appBar: AppBar(
                 actions: [
@@ -84,28 +86,10 @@ class _HomeState extends State<Home> {
                     Theme.of(context).primaryColor.withOpacity(0.5),
               ),
               body: ListView.builder(
-                itemCount: meals.length,
+                itemCount: successState.products.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    padding: EdgeInsets.all(10),
-                    margin: EdgeInsets.all(10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          meals[index]['name'],
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Image(
-                          image: NetworkImage(meals[index]['imageUrl']),
-                          fit: BoxFit.cover,
-                        ),
-                      ],
-                    ),
-                  );
+                  return ProductTile(
+                      productDataModel: successState.products[index]);
                 },
               ),
             );
