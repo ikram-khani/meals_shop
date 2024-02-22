@@ -1,6 +1,6 @@
 {
-    "name": "flutter_bloc",
-    "short_name": "flutter_bloc",
+    "name": "meals_shop",
+    "short_name": "meals_shop",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

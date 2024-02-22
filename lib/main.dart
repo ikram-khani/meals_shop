@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/features/home/ui/home.dart';
+import 'package:meals_shop/features/home/ui/home.dart';
 
 void main() {
   runApp(const MyApp());

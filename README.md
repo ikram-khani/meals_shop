@@ -1,4 +1,4 @@
-# flutter_bloc
+# meals_shop
 
 A new Flutter project.
 
