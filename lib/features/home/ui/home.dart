@@ -86,7 +86,10 @@ class _HomeState extends State<Home> {
                         HomeWishlistButtonNavigateEvent(),
                       );
                     },
-                    icon: const Icon(Icons.favorite_border),
+                    icon: const Icon(
+                      Icons.favorite_border,
+                      color: Colors.white,
+                    ),
                   ),
                   IconButton(
                     onPressed: () {
@@ -94,7 +97,10 @@ class _HomeState extends State<Home> {
                         HomeCartButtonNavigateEvent(),
                       );
                     },
-                    icon: const Icon(Icons.shopping_cart_outlined),
+                    icon: const Icon(
+                      Icons.shopping_cart_outlined,
+                      color: Colors.white,
+                    ),
                   ),
                 ],
                 title: const Text(

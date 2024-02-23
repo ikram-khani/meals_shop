@@ -14,19 +14,23 @@ class CartTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final deviceWidth = MediaQuery.of(context).size.width;
     return Container(
-      padding: const EdgeInsets.all(10),
+      // padding: const EdgeInsets.all(10),
       margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: const BorderRadius.only(
+          topRight: Radius.circular(10),
+          bottomRight: Radius.circular(10),
+        ),
         border: Border.all(color: Colors.black),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SizedBox(
-            height: 200,
-            width: double.infinity,
+            height: 100,
+            width: deviceWidth / 3.5,
             child: CachedNetworkImage(
               fadeInDuration: const Duration(milliseconds: 500),
               placeholderFadeInDuration: const Duration(milliseconds: 300),
@@ -39,60 +43,84 @@ class CartTile extends StatelessWidget {
             ),
           ),
           const SizedBox(
-            height: 20,
+            width: 10,
           ),
-          Text(
-            productDataModel.name,
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          Text(productDataModel.description),
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                '\$${productDataModel.price}',
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+
+          // Text(productDataModel.description),
+          //  const SizedBox(
+          //    height: 20,
+          // ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  productDataModel.name,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              Row(
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      cartBloc.add(
-                        RemoveFromCartEvent(
-                          productDataModel: productDataModel,
-                        ),
-                      );
-                    },
-                    icon: Icon(
-                      Icons.delete,
-                      color: Colors.red.withOpacity(1),
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '\$${productDataModel.price}',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey,
+                      ),
                     ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      //   cartBloc.add(
-                      //     HomeProductCartButtonClickedEvent(
-                      //       clickedProduct: productDataModel,
-                      //     ),
-                      //   );
-                    },
-                    icon: const Icon(Icons.favorite_border),
-                  ),
-                ],
-              )
-            ],
+                    IconButton(
+                      onPressed: () {
+                        cartBloc.add(
+                          RemoveFromCartEvent(
+                            productDataModel: productDataModel,
+                          ),
+                        );
+                      },
+                      icon: Icon(
+                        Icons.delete,
+                        color: Colors.red.withOpacity(1),
+                      ),
+                    ),
+                  ],
+                ),
+
+                // Row(
+                //   children: [
+                //     IconButton(
+                //       onPressed: () {
+                //         cartBloc.add(
+                //           RemoveFromCartEvent(
+                //             productDataModel: productDataModel,
+                //           ),
+                //         );
+                //       },
+                //       icon: Icon(
+                //         Icons.delete,
+                //         color: Colors.red.withOpacity(1),
+                //       ),
+                //     ),
+                //     IconButton(
+                //       onPressed: () {
+                //         //   cartBloc.add(
+                //         //     HomeProductCartButtonClickedEvent(
+                //         //       clickedProduct: productDataModel,
+                //         //     ),
+                //         //   );
+                //       },
+                //       icon: const Icon(Icons.favorite_border),
+                //     ),
+                //   ],
+                // )
+              ],
+            ),
           ),
         ],
       ),
