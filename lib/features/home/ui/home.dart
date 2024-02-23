@@ -51,7 +51,7 @@ class _HomeState extends State<Home> {
                 'Item added to Cart.',
                 style: TextStyle(color: Colors.white),
               ),
-              backgroundColor: Theme.of(context).primaryColor.withOpacity(0.5),
+              backgroundColor: Theme.of(context).primaryColor,
             ),
           );
         } else if (state is HomeProductAddedToWishlistActionState) {
@@ -62,7 +62,7 @@ class _HomeState extends State<Home> {
                 'Item added to Wishlist.',
                 style: TextStyle(color: Colors.white),
               ),
-              backgroundColor: Theme.of(context).primaryColor.withOpacity(0.5),
+              backgroundColor: Theme.of(context).primaryColor,
             ),
           );
         }
