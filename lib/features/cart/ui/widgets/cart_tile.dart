@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:meals_shop/features/cart/bloc/cart_bloc.dart';
+import 'package:meals_shop/features/cart/ui/widgets/confirm_dialog.dart';
 import 'package:meals_shop/features/home/models/product_data_model.dart';
 
 class CartTile extends StatelessWidget {
@@ -16,13 +17,11 @@ class CartTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final deviceWidth = MediaQuery.of(context).size.width;
     return Container(
+      height: 80,
       // padding: const EdgeInsets.all(10),
       margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        borderRadius: const BorderRadius.only(
-          topRight: Radius.circular(10),
-          bottomRight: Radius.circular(10),
-        ),
+        borderRadius: BorderRadius.circular(10),
         border: Border.all(color: Colors.black),
       ),
       child: Row(
@@ -31,39 +30,40 @@ class CartTile extends StatelessWidget {
           SizedBox(
             height: 100,
             width: deviceWidth / 3.5,
-            child: CachedNetworkImage(
-              fadeInDuration: const Duration(milliseconds: 500),
-              placeholderFadeInDuration: const Duration(milliseconds: 300),
-              fit: BoxFit.cover,
-              placeholder: (context, url) => Container(
-                color: Colors.grey[300],
+            child: ClipRRect(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(10),
+                bottomLeft: Radius.circular(10),
               ),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
-              imageUrl: productDataModel.imageUrl,
+              child: CachedNetworkImage(
+                fadeInDuration: const Duration(milliseconds: 500),
+                placeholderFadeInDuration: const Duration(milliseconds: 300),
+                fit: BoxFit.cover,
+                placeholder: (context, url) => Container(
+                  color: Colors.grey[300],
+                ),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+                imageUrl: productDataModel.imageUrl,
+              ),
             ),
           ),
           const SizedBox(
             width: 10,
           ),
-
-          // Text(productDataModel.description),
-          //  const SizedBox(
-          //    height: 20,
-          // ),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                const SizedBox(
+                  height: 5,
+                ),
                 Text(
                   productDataModel.name,
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
-                ),
-                const SizedBox(
-                  height: 20,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -77,13 +77,8 @@ class CartTile extends StatelessWidget {
                       ),
                     ),
                     IconButton(
-                      onPressed: () {
-                        cartBloc.add(
-                          RemoveFromCartEvent(
-                            productDataModel: productDataModel,
-                          ),
-                        );
-                      },
+                      onPressed: () => ShowConfirmDialog.show(
+                          context, productDataModel, cartBloc),
                       icon: Icon(
                         Icons.delete,
                         color: Colors.red.withOpacity(1),
@@ -91,34 +86,6 @@ class CartTile extends StatelessWidget {
                     ),
                   ],
                 ),
-
-                // Row(
-                //   children: [
-                //     IconButton(
-                //       onPressed: () {
-                //         cartBloc.add(
-                //           RemoveFromCartEvent(
-                //             productDataModel: productDataModel,
-                //           ),
-                //         );
-                //       },
-                //       icon: Icon(
-                //         Icons.delete,
-                //         color: Colors.red.withOpacity(1),
-                //       ),
-                //     ),
-                //     IconButton(
-                //       onPressed: () {
-                //         //   cartBloc.add(
-                //         //     HomeProductCartButtonClickedEvent(
-                //         //       clickedProduct: productDataModel,
-                //         //     ),
-                //         //   );
-                //       },
-                //       icon: const Icon(Icons.favorite_border),
-                //     ),
-                //   ],
-                // )
               ],
             ),
           ),

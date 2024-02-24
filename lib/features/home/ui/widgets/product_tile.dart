@@ -32,10 +32,38 @@ class ProductTile extends StatelessWidget {
               fadeInDuration: const Duration(milliseconds: 500),
               placeholderFadeInDuration: const Duration(milliseconds: 300),
               fit: BoxFit.cover,
-              placeholder: (context, url) => Container(
+              placeholder: (context, url) => AnimatedContainer(
+                duration: const Duration(milliseconds: 500),
                 color: Colors.grey[300],
+                child: LinearProgressIndicator(
+                  backgroundColor: Colors.grey[300],
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.grey[100]!),
+                ),
               ),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
+              errorWidget: (context, url, error) {
+                return Column(
+                  children: [
+                    const Icon(Icons.error),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Text(
+                      'Oops! Something went wrong while loading data.',
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    TextButton(
+                      child: const Text(
+                        'Try again',
+                        style: TextStyle(
+                            color: Colors.blue, fontWeight: FontWeight.bold),
+                      ),
+                      onPressed: () => homeBloc.add(HomeInitialEvent()),
+                    )
+                  ],
+                );
+              },
               imageUrl: productDataModel.imageUrl,
             ),
           ),
