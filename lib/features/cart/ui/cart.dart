@@ -40,14 +40,82 @@ class _CartPageState extends State<CartPage> {
           switch (state.runtimeType) {
             case CartSuccessState:
               final successState = state as CartSuccessState;
-              return ListView.builder(
-                itemCount: successState.cartItems.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return CartTile(
-                    productDataModel: successState.cartItems[index],
-                    cartBloc: cartBloc,
-                  );
-                },
+              final cartItems = successState.cartItems;
+              final double totalPrice = cartItems.fold(
+                0,
+                (previousValue, element) => previousValue + element.price,
+              );
+
+              return Column(
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: cartItems.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return CartTile(
+                          productDataModel: cartItems[index],
+                          cartBloc: cartBloc,
+                        );
+                      },
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    height: 70,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor.withOpacity(0.7),
+                      border: Border.all(color: Colors.black),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            const Text(
+                              'Total: ',
+                              style: TextStyle(
+                                color: Colors.black87,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            ),
+                            Text(
+                              '\$${totalPrice.toStringAsFixed(2)}',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 17,
+                              ),
+                            ),
+                          ],
+                        ),
+                        TextButton(
+                          onPressed: () {},
+                          style: ButtonStyle(
+                            backgroundColor: const MaterialStatePropertyAll(
+                                Color.fromARGB(255, 248, 218, 218)),
+                            foregroundColor: const MaterialStatePropertyAll(
+                                Color.fromARGB(255, 63, 77, 51)),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                    10.0), // Adjust the value as needed
+                              ),
+                            ),
+                          ),
+                          child: const Text(
+                            'Proceed to Checkout',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               );
             default:
               return SizedBox();

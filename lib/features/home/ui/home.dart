@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:meals_shop/data/cart_item.dart';
 import 'package:meals_shop/data/meals_data.dart';
 import 'package:meals_shop/features/cart/ui/cart.dart';
 import 'package:meals_shop/features/home/bloc/home_bloc.dart';
+import 'package:meals_shop/features/home/ui/widgets/cart_badge.dart';
 import 'package:meals_shop/features/home/ui/widgets/product_tile.dart';
 import 'package:meals_shop/features/wishlist/ui/wishlist.dart';
 
@@ -91,17 +93,24 @@ class _HomeState extends State<Home> {
                       color: Colors.white,
                     ),
                   ),
-                  IconButton(
-                    onPressed: () {
-                      homeBloc.add(
-                        HomeCartButtonNavigateEvent(),
-                      );
-                    },
-                    icon: const Icon(
-                      Icons.shopping_cart_outlined,
-                      color: Colors.white,
-                    ),
+                  const SizedBox(
+                    width: 10,
                   ),
+                  CartBadge(
+                    homeBloc: homeBloc,
+                    cartItems: cartItems,
+                  ),
+                  // IconButton(
+                  //   onPressed: () {
+                  //     homeBloc.add(
+                  //       HomeCartButtonNavigateEvent(),
+                  //     );
+                  //   },
+                  //   icon: const Icon(
+                  //     Icons.shopping_cart_outlined,
+                  //     color: Colors.white,
+                  //   ),
+                  // ),
                 ],
                 title: const Text(
                   'Meals Shop',
